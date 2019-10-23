@@ -1,6 +1,7 @@
-from chalice import Chalice
+from chalice import Chalice, BadRequestError
 
 app = Chalice(app_name='helloworld')
+app.debug = True
 
 CITIES_TO_STATE = {
     'seattle': 'WA',
@@ -15,4 +16,8 @@ def index():
 
 @app.route('/cities/{city}')
 def state_of_city(city):
-    return {'state': CITIES_TO_STATE[city]}
+    try:
+        return {'state': CITIES_TO_STATE[city]}
+    except KeyError:
+        raise BadRequestError("Unknown city '%s', valid choices are: %s" % (
+            city, ', '.join(CITIES_TO_STATE.keys())))
