@@ -26,3 +26,12 @@ def state_of_city(city):
             raise BadRequestError("Unknown city '%s', valid choices are: %s" % (
                 city, ', '.join(CITIES_TO_STATE.keys())))
 
+
+def test_state_of_city():
+    assert state_of_city('seattle') == {'state': 'WA'}
+
+
+def test_index():
+    assert index() == {'hello': 'world'};
+
+
